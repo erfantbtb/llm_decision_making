@@ -1,0 +1,5 @@
+agent:
+  model: gemma3
+  
+simulation:
+  n_iter: 1000

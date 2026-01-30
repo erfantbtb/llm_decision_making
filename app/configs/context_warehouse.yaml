@@ -1,0 +1,17 @@
+automotive:
+  annual_maintenance:
+    mean: 500
+    std: 100
+    min: 100
+    max: 1000
+    source: "historical_vehicle_data"
+
+  annual_mileage:
+    mean: 15000
+    std: 2000
+    source: "us_driver_statistics"
+
+  lease_overage_cost:
+    mean: 0.15
+    std: 0.05
+    source: "lease_contracts"
