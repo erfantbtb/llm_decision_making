@@ -2,8 +2,6 @@ automotive:
   annual_maintenance:
     mean: 500
     std: 100
-    min: 100
-    max: 1000
     source: "historical_vehicle_data"
 
   annual_mileage:
@@ -15,3 +13,7 @@ automotive:
     mean: 0.15
     std: 0.05
     source: "lease_contracts"
+
+  duration: 3
+  estimated_maintenance_cost: 500 
+   
