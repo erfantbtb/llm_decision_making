@@ -1,8 +1,8 @@
-# simulation.py
 import numpy as np
 import typing
 from pydantic import BaseModel
 from models.simulation_parameters import CarSimulationParameters
+
 
 class MonteCarloSimulation:
     def __init__(self, params: CarSimulationParameters, num_simulations: int = 10000):
@@ -14,9 +14,7 @@ class MonteCarloSimulation:
         Runs the Monte Carlo simulation for Buying vs Leasing.
         Returns a dictionary with average costs and probabilities.
         """
-        # 1. Generate Random Variables
-        # Maintenance cost varies per year
-        years = self.params.duration_months / 12
+        years = self.params.duration_lease_months / 12
         
         # Simulate maintenance for the entire duration (sum of random yearly costs)
         # We assume maintenance costs are independent and identically distributed (i.i.d) per year
@@ -43,7 +41,7 @@ class MonteCarloSimulation:
 
         # 3. Calculate Lease Costs
         # Total Lease = (Monthly Payment * Months) + Down Payment + Overage Charges
-        base_lease_cost = (self.params.monthly_lease * self.params.duration_months) + self.params.down_payment
+        base_lease_cost = (self.params.monthly_lease * self.params.duration_lease_months) + self.params.down_payment
         
         # Calculate overage miles (ensure no negative values)
         overage_miles = np.maximum(0, simulated_annual_mileage - self.params.lease_mileage_allowance)
