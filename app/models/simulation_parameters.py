@@ -2,19 +2,17 @@ from pydantic import BaseModel
 
 class CarSimulationParameters(BaseModel):
     data_complete: bool 
-    # Purchase Parameters
     purchase_price: float
     down_payment: float
     
-    # Lease Parameters
     monthly_lease: float
-    lease_mileage_allowance: int  # e.g., 12000 miles/year
+    lease_mileage_allowance: int  
     
-    # Time and Usage
-    duration_months: int
-    annual_mileage: int  # e.g., 15000 miles/year
+    duration_buy_months: int
+    duration_lease_months: int 
+    annual_mileage: int  
     
-    # Costs and Variability
-    estimated_maintenance_avg: float
-    maintenance_std_dev: float
-    overage_charge_per_mile: float  # e.g., 0.15 dollars/mile
+    estimated_maintenance_avg: float = 100.0
+    maintenance_std_dev: float = 3.0
+    overage_charge_per_mile: float = 1.5 
+    

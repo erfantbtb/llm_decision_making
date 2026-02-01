@@ -1,5 +1,5 @@
 from ollama import chat
-from typing import List, Dict
+from typing import List, Dict, Optional
 import json 
 
 
@@ -14,7 +14,7 @@ class LLMAgent:
 
     def run(self,
             messages: List[Dict[str, str]], 
-            format: json) -> str:
+            format: Optional[Dict] = None) -> str:
         """
         Run a chat completion with Ollama
         """

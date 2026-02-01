@@ -1,26 +1,21 @@
 from agent import LLMAgent
+from simulation import MonteCarloSimulation
 import streamlit as st
 from models.simulation_parameters import CarSimulationParameters
 from ollama import chat
+import json 
 
-st.title("🔍 Parameter Extraction Bot")
-system_prompt = """
-You are a strict information extraction assistant.
 
-Extract car-related financial parameters from the conversation.
+st.title("Car Consultant Bot")
 
-Required parameters:
-- purchase_price
-- monthly_lease
-- duration_months
-- estimated_maintenance_avg
+schema = CarSimulationParameters.model_json_schema()
+params = None
 
-Rules:
-- If ANY required parameter is missing or unclear, set data_complete to false.
-- If ALL required parameters are present and numeric, set data_complete to true.
-- Return ONLY valid JSON that matches the provided schema.
-- Do NOT explain anything.
-"""
+with open("app/configs/system_prompts.json", "r") as f:
+    system_prompt = json.load(f)[0]["content"]
+
+system_prompt = f"""{system_prompt} USE REQUIRED PARAMETER SCHEMA IN (INTERNAL — DO NOT SHOW TO CUSTOMER): {schema}.
+                    data_complete is false until all other params are extracted"""
 
 # Session state
 if "messages" not in st.session_state:
@@ -33,62 +28,36 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-if prompt := st.chat_input("Describe your car decision"):
+if prompt := st.chat_input("Welcome to car consultant bot."):
     # Show user message
-    st.session_state.messages.append({"role": "user", "content": prompt})
+    
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    schema = CarSimulationParameters.model_json_schema()
+    prompt = f"{prompt} if all parameters are extracted, give data in json format which keys are param names and values are the users values"
+    st.session_state.messages.append({"role": "user", "content": prompt})
 
+
+    assistant_json = llm.run(
+        st.session_state.messages,
+        # format=schema
+    )
+    
+    response_json = llm.run(
+        st.session_state.messages,
+        format=schema
+    )
+
+    st.session_state.messages.append({"role": "assistant", "content": assistant_json})
+    with st.chat_message("assistant"):
+        st.markdown(assistant_json)
+        
     try:
-        # Extract parameters
-        response_json = llm.run(
-            st.session_state.messages,
-            format=schema
-        )
-
         params = CarSimulationParameters.model_validate_json(response_json)
+        all_params_collected = True
+        print(params)
 
-        # If missing data → ask follow-up
-        if not params.data_complete:
-            follow_up_messages = [
-                {
-                    "role": "system",
-                    "content": "Ask ONLY for missing numeric parameters. Be concise."
-                },
-                {
-                    "role": "user",
-                    "content": f"Extracted so far: {params.model_dump_json()}"
-                }
-            ]
+    except:
+        all_params_collected = False 
+        
 
-            resp = chat(
-                model="gemma3",
-                messages=follow_up_messages,
-                stream=False
-            )
-
-            reply = resp["message"]["content"]
-
-            with st.chat_message("assistant"):
-                st.markdown(reply)
-
-            st.session_state.messages.append(
-                {"role": "assistant", "content": reply}
-            )
-
-        # Data complete → just show JSON
-        else:
-            with st.chat_message("assistant"):
-                st.markdown("✅ **All parameters extracted successfully**")
-                st.json(params.model_dump())
-
-            st.session_state.messages.append({
-                "role": "assistant",
-                "content": params.model_dump_json(indent=2)
-            })
-
-    except Exception as e:
-        with st.chat_message("assistant"):
-            st.error(f"Extraction error: {e}")
