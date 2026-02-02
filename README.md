@@ -44,7 +44,7 @@ After installation, for running the UI, we use streamlit CLI:
 ```bash
   streamlit run app/interface.py
 ```
-
+![User Interface](https://github.com/erfantbtb/llm_decision_making/blob/main/pics/ui.png)
 
 
 ## Authors
