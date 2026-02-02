@@ -17,7 +17,7 @@ Install Ollama first:
   curl -fsSL https://ollama.com/install.sh | sh
 ```
 
-Download and runGemma3 model:
+Download and run Gemma3 model:
 ```bash
   ollama run gemma3
 ```
