@@ -2,7 +2,6 @@ from agent import LLMAgent
 from simulation import MonteCarloSimulation
 import streamlit as st
 from models.simulation_parameters import CarSimulationParameters
-import matplotlib.pyplot as plt
 import json 
 
 
@@ -58,15 +57,5 @@ if prompt := st.chat_input("Welcome to car consultant bot."):
                 }]
             response_result = llm.run(result_msg)
             st.markdown(response_result)
-            
-            # fig, ax = plt.subplots()
-            # ax.hist(result["buy_cost_distribution"], bins=50, color='skyblue', edgecolor='black', label="buy")
-            # ax.hist(result["lease_cost_distribution"], bins=50, color='salmon', edgecolor='black', label="lease")
-            # ax.set_title("Distribution of Buy and lease Cost")
-            # ax.set_xlabel("Cost ($)")
-            # ax.set_ylabel("Frequency")
-            # plt.grid()
-            # plt.legend()
-            # st.pyplot(fig)
-    
 
+    

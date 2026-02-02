@@ -1,0 +1,15 @@
+json5==0.12.1
+markdown2==2.5.4
+matplotlib==3.10.7
+matplotlib-inline==0.2.1
+numpy==2.3.4
+ollama==0.6.1
+prompt_toolkit==3.0.52
+pydantic==2.12.5
+pydantic_core==2.41.5
+requests==2.32.5
+streamlit==1.53.1
+streamlit-chatbox==1.1.13.post1
+streamlit-feedback==0.1.4
+streamlit-markdown==1.1.0
+
