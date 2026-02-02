@@ -46,12 +46,6 @@ After installation, for running the UI, we use streamlit CLI:
 ```
 ![User Interface](https://github.com/erfantbtb/llm_decision_making/blob/main/pics/ui.png)
 
-
-## Authors
-
-- [@erfantbtb](https://github.com/erfantbtb)
-
-
 ## Optimizations and test
 
 Gemma was very weak model. So we needed a very good and tuned prompts to make sure the model behaves exactly as wanted.General system prompt is the json file in below:
@@ -68,4 +62,8 @@ Gemma was very weak model. So we needed a very good and tuned prompts to make su
 Tested Result can be seen in the image below:
 
 ![Agent Result](https://github.com/erfantbtb/llm_decision_making/blob/main/pics/result.png)
+
+## Authors
+
+- [@erfantbtb](https://github.com/erfantbtb)
 
