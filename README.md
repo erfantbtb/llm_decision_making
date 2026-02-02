@@ -67,5 +67,5 @@ Gemma was very weak model. So we needed a very good and tuned prompts to make su
 ```
 Tested Result can be seen in the image below:
 
-![Agent Result](https://github.com/erfantbtb/llm_decision_making/pics/result.png)
+![Agent Result](https://github.com/erfantbtb/llm_decision_making/blob/main/pics/result.png)
 
